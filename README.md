@@ -1,5 +1,5 @@
 # Patent Management System
-## CS 490 Senior Project
+*CS 490 Senior Project*
 
 Currently, IP and patent management systems for inventors mostly are customer relationship
 management systems that both lack simplicity and useability in design and lack a mechanism for alerting
