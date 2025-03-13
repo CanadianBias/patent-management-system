@@ -21,6 +21,13 @@ header {
 .right-header > * {
     padding: 10px;
 }
+a {
+    color: black;
+    text-decoration: none;
+}
+a:hover {
+    background-color: #737373;
+}
 footer {
     background-color: black;
     position: fixed;

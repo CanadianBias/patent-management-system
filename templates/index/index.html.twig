@@ -1,7 +1,13 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+
+Patent Management
+
+{% endblock %}
+
 {% block headerbuttons %}
 
-<a href="{{ path('app_about') }}">About</a><a>Login</a>
+<a href="{{ path('app_about') }}">About</a><a href="{{ path('app_login') }}">Login</a>
 
 {% endblock %}
