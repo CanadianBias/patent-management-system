@@ -6,14 +6,32 @@ use App\Repository\InventorRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: InventorRepository::class)]
-class Inventor
+#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_USERNAME', fields: ['username'])]
+class Inventor implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+
+    #[ORM\Column(length: 180)]
+    private ?string $username = null;
+
+    /**
+     * @var list<string> The user roles
+     */
+    #[ORM\Column]
+    private array $roles = [];
+
+    /**
+     * @var string The hashed password
+     */
+    #[ORM\Column]
+    private ?string $password = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $FirstName = null;
@@ -21,32 +39,100 @@ class Inventor
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $LastName = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255)]
     private ?string $Email = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $PhoneNumber = null;
 
-    #[ORM\Column(length: 512, nullable: true)]
-    private ?string $PassHash = null;
-
     #[ORM\ManyToOne]
-    private ?PersonType $InventorIsPersonType = null;
+    #[ORM\JoinColumn(nullable: false)]
+    private ?PersonType $PersonType = null;
 
     /**
      * @var Collection<int, Patent>
      */
-    #[ORM\ManyToMany(targetEntity: Patent::class, inversedBy: 'Inventors')]
-    private Collection $InventorsHavePatents;
+    #[ORM\ManyToMany(targetEntity: Patent::class, inversedBy: 'inventors')]
+    private Collection $AssociatedPatents;
 
     public function __construct()
     {
-        $this->InventorsHavePatents = new ArrayCollection();
+        $this->AssociatedPatents = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getUsername(): ?string
+    {
+        return $this->username;
+    }
+
+    public function setUsername(string $username): static
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->username;
+    }
+
+    /**
+     * @see UserInterface
+     *
+     * @return list<string>
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    /**
+     * @param list<string> $roles
+     */
+    public function setRoles(array $roles): static
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @see PasswordAuthenticatedUserInterface
+     */
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): static
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials(): void
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 
     public function getFirstName(): ?string
@@ -78,7 +164,7 @@ class Inventor
         return $this->Email;
     }
 
-    public function setEmail(?string $Email): static
+    public function setEmail(string $Email): static
     {
         $this->Email = $Email;
 
@@ -97,26 +183,14 @@ class Inventor
         return $this;
     }
 
-    public function getPassHash(): ?string
+    public function getPersonType(): ?PersonType
     {
-        return $this->PassHash;
+        return $this->PersonType;
     }
 
-    public function setPassHash(?string $PassHash): static
+    public function setPersonType(?PersonType $PersonType): static
     {
-        $this->PassHash = $PassHash;
-
-        return $this;
-    }
-
-    public function getInventorIsPersonType(): ?PersonType
-    {
-        return $this->InventorIsPersonType;
-    }
-
-    public function setInventorIsPersonType(?PersonType $InventorIsPersonType): static
-    {
-        $this->InventorIsPersonType = $InventorIsPersonType;
+        $this->PersonType = $PersonType;
 
         return $this;
     }
@@ -124,25 +198,24 @@ class Inventor
     /**
      * @return Collection<int, Patent>
      */
-    public function getInventorsHavePatents(): Collection
+    public function getAssociatedPatents(): Collection
     {
-        return $this->InventorsHavePatents;
+        return $this->AssociatedPatents;
     }
 
-    public function addInventorsHavePatent(Patent $inventorsHavePatent): static
+    public function addAssociatedPatent(Patent $associatedPatent): static
     {
-        if (!$this->InventorsHavePatents->contains($inventorsHavePatent)) {
-            $this->InventorsHavePatents->add($inventorsHavePatent);
+        if (!$this->AssociatedPatents->contains($associatedPatent)) {
+            $this->AssociatedPatents->add($associatedPatent);
         }
 
         return $this;
     }
 
-    public function removeInventorsHavePatent(Patent $inventorsHavePatent): static
+    public function removeAssociatedPatent(Patent $associatedPatent): static
     {
-        $this->InventorsHavePatents->removeElement($inventorsHavePatent);
+        $this->AssociatedPatents->removeElement($associatedPatent);
 
         return $this;
     }
-
 }

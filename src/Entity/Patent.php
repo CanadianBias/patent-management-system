@@ -16,12 +16,6 @@ class Patent
     private ?int $id = null;
 
     /**
-     * @var Collection<int, Inventor>
-     */
-    #[ORM\ManyToMany(targetEntity: Inventor::class, mappedBy: 'InventorsHavePatents')]
-    private Collection $Inventors;
-
-    /**
      * @var Collection<int, RelatedPatents>
      */
     #[ORM\OneToMany(targetEntity: RelatedPatents::class, mappedBy: 'PrimaryPatent', orphanRemoval: true)]
@@ -82,14 +76,20 @@ class Patent
     #[ORM\OneToMany(targetEntity: Dates::class, mappedBy: 'PatentID', orphanRemoval: true)]
     private Collection $PatentsHaveDates;
 
+    /**
+     * @var Collection<int, Inventor>
+     */
+    #[ORM\ManyToMany(targetEntity: Inventor::class, mappedBy: 'AssociatedPatents')]
+    private Collection $inventors;
+
     public function __construct()
     {
-        $this->Inventors = new ArrayCollection();
         $this->ThisPatentReferences = new ArrayCollection();
         $this->PatentReferencedBy = new ArrayCollection();
         $this->ClassificationsList = new ArrayCollection();
         $this->PatentsHaveClaims = new ArrayCollection();
         $this->PatentsHaveDates = new ArrayCollection();
+        $this->inventors = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -102,13 +102,13 @@ class Patent
      */
     public function getInventors(): Collection
     {
-        return $this->Inventors;
+        return $this->inventors;
     }
 
     public function addInventor(Inventor $inventor): static
     {
-        if (!$this->Inventors->contains($inventor)) {
-            $this->Inventors->add($inventor);
+        if (!$this->inventors->contains($inventor)) {
+            $this->inventors->add($inventor);
             $inventor->addInventorsHavePatent($this);
         }
 
@@ -117,7 +117,7 @@ class Patent
 
     public function removeInventor(Inventor $inventor): static
     {
-        if ($this->Inventors->removeElement($inventor)) {
+        if ($this->inventors->removeElement($inventor)) {
             $inventor->removeInventorsHavePatent($this);
         }
 

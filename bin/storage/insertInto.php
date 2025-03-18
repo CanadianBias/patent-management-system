@@ -1,4 +1,4 @@
-// clear table values
+        // clear table values
         $this->addSql('DELETE FROM language');
         $this->addSql('DELETE FROM business_type');
         $this->addSql('DELETE FROM person_type');
