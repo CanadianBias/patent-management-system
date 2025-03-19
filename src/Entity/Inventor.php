@@ -6,11 +6,15 @@ use App\Repository\InventorRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: InventorRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_USERNAME', fields: ['username'])]
+#[UniqueEntity(fields: ['username'], message: 'There is already an account with this username')]
+#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['Email'])]
+#[UniqueEntity(fields: ['Email'], message: 'There is already an account with this email')]
 class Inventor implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
