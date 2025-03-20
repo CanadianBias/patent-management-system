@@ -2,6 +2,18 @@
 
 {% block title %}Patent Management System{% endblock %}
 
+{% block headerbuttons %}
+
+<a href="{{path('app_account')}}">Manage Accounts</a><a href="{{path('app_logout')}}" class="btn btn-primary">Logout</a>
+
+{% endblock %}
+
+{% block content %}
+
+{% endblock %}
+
 {% block body %}
+
+<a href="{{path('app_view_table')}}">Patent List</a><a href="{{path('app_view_calendar')}}">Calendar View</a><a href="{{path('app_create_patent')}}">New Patent</a><a href="{{path('app_create_date')}}">New Date</a>
 
 {% endblock %}
