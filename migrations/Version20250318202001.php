@@ -59,8 +59,13 @@ final class Version20250318202001 extends AbstractMigration
         $this->addSql('DELETE FROM category');
         $this->addSql('DELETE FROM stats');
         $this->addSql('DELETE FROM date_types');
+        $this->addSql('DELETE FROM localization');
 
         // Adds constant values for tables
+        $this->addSql("INSERT INTO localization (type)
+        VALUES
+        ('USPC'),
+        ('International')");
         $this->addSql("INSERT INTO language (code, name)
         VALUES
         ('aar','Afar'),
