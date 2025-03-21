@@ -20,7 +20,8 @@
             label: 'Password'
         }) }}
         {{ form_row(registrationForm.Email) }}
+        {{ form_row(registrationForm.PersonType )}}
+        {{ form_row(registrationForm.submit )}}
 
-        <button type="submit" class="btn">Register</button>
     {{ form_end(registrationForm) }}
 {% endblock %}
