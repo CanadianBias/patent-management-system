@@ -29,6 +29,7 @@
         <input type="hidden" name="_csrf_token" data-controller="crsf-protection"
                value="{{ csrf_token('authenticate') }}"
         >
+        <input type="hidden" name="_target_path" value="/user/home">
 
         {#
             Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
@@ -50,7 +51,5 @@
 {% endblock %}
 
 {% block footer %}
-
-<a href="{{ path('app_user_home')}}">Cheat into the system...</a>
 
 {% endblock %}
