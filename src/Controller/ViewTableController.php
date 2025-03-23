@@ -17,8 +17,17 @@ final class ViewTableController extends AbstractController
         // $patents = $repository->findAll(); // This line is used to get all the patents from the database
         // dd($patents); // This line is used to dump the patents
 
+        $user = $this->getUser(); // This line is used to get the current user
+
+        // Debug
+        // dd($user); // This line is used to dump the user
+
+        $patents = $repository->findBy(
+            ['inventors' => $user]
+        ); // This line is used to get the patents of the current user
+
         return $this->render('view_table/index.html.twig', [
-            'patents' => $repository->findAll(),
+            'patents' => $patents,
         ]);
     }
 }

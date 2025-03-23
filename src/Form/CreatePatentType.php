@@ -18,6 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CreatePatentType extends AbstractType
 {
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -40,6 +41,11 @@ class CreatePatentType extends AbstractType
             ->add('PatentsHaveStatus', EntityType::class, [
                 'class' => Stats::class,
                 'choice_label' => 'Stat',
+            ])
+            ->add('inventors', EntityType::class, [
+                'class' => Inventor::class,
+                'choice_label' => 'username',
+                'multiple' => true,
             ])
             // ->add('PatentHasBusinessType', EntityType::class, [
             //     'class' => BusinessType::class,

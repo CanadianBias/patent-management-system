@@ -109,7 +109,7 @@ class Patent
     {
         if (!$this->inventors->contains($inventor)) {
             $this->inventors->add($inventor);
-            $inventor->addInventorsHavePatent($this);
+            $inventor->addAssociatedPatent($this);
         }
 
         return $this;
@@ -118,7 +118,7 @@ class Patent
     public function removeInventor(Inventor $inventor): static
     {
         if ($this->inventors->removeElement($inventor)) {
-            $inventor->removeInventorsHavePatent($this);
+            $inventor->removeAssociatedPatent($this);
         }
 
         return $this;

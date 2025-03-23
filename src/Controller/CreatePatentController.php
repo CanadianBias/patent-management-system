@@ -21,6 +21,10 @@ final class CreatePatentController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $patent = $form->getData();
+
+            // This do not work
+            // $patent->addInventor($this->getUser());
+
             $entityManager->persist($patent);
             $entityManager->flush();
 
