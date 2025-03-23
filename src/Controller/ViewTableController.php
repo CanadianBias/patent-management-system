@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Patent;
 use App\Repository\PatentRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,18 +14,14 @@ final class ViewTableController extends AbstractController
     public function index(PatentRepository $repository): Response // A repository would need to a parameter to the index method
     {
 
-        // Debug
-        // $patents = $repository->findAll(); // This line is used to get all the patents from the database
-        // dd($patents); // This line is used to dump the patents
-
         $user = $this->getUser(); // This line is used to get the current user
 
-        // Debug
-        // dd($user); // This line is used to dump the user
+        $patents = $repository->createQueryBuilder('p') // This line is used to create a query builder
+            ->where('p.inventors = :user') // This line is used to filter the query
+            ->setParameter('user', $user) // This line is used to set the parameter
+            ->getQuery(); // This line is used to get the query
 
-        $patents = $repository->findBy(
-            ['inventors' => $user]
-        ); // This line is used to get the patents of the current user
+        // $patents = $repository->findAll();
 
         return $this->render('view_table/index.html.twig', [
             'patents' => $patents,
