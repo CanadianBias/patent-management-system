@@ -79,8 +79,8 @@ class Patent
     /**
      * @var Collection<int, Inventor>
      */
-    #[ORM\ManyToMany(targetEntity: Inventor::class, mappedBy: 'AssociatedPatents')]
-    private Collection $inventors;
+    #[ORM\ManyToMany(targetEntity: Inventor::class, inversedBy: 'patents')]
+    private Collection $Inventors;
 
     public function __construct()
     {
@@ -89,39 +89,12 @@ class Patent
         $this->ClassificationsList = new ArrayCollection();
         $this->PatentsHaveClaims = new ArrayCollection();
         $this->PatentsHaveDates = new ArrayCollection();
-        $this->inventors = new ArrayCollection();
+        $this->Inventors = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * @return Collection<int, Inventor>
-     */
-    public function getInventors(): Collection
-    {
-        return $this->inventors;
-    }
-
-    public function addInventor(Inventor $inventor): static
-    {
-        if (!$this->inventors->contains($inventor)) {
-            $this->inventors->add($inventor);
-            $inventor->addAssociatedPatent($this);
-        }
-
-        return $this;
-    }
-
-    public function removeInventor(Inventor $inventor): static
-    {
-        if ($this->inventors->removeElement($inventor)) {
-            $inventor->removeAssociatedPatent($this);
-        }
-
-        return $this;
     }
 
     /**
@@ -378,6 +351,30 @@ class Patent
                 $patentsHaveDate->setPatentID(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Inventor>
+     */
+    public function getInventors(): Collection
+    {
+        return $this->Inventors;
+    }
+
+    public function addInventor(Inventor $inventor): static
+    {
+        if (!$this->Inventors->contains($inventor)) {
+            $this->Inventors->add($inventor);
+        }
+
+        return $this;
+    }
+
+    public function removeInventor(Inventor $inventor): static
+    {
+        $this->Inventors->removeElement($inventor);
 
         return $this;
     }

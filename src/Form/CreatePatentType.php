@@ -52,7 +52,8 @@ class CreatePatentType extends AbstractType
                 'class' => Stats::class,
                 'choice_label' => 'Stat',
             ])
-            ->add('inventors', EntityType::class, [
+            // this adds the relationship in the database, but doesn't actually add the relationship in the ORM
+            ->add('Inventors', EntityType::class, [
                 'class' => Inventor::class,
                 'choice_label' => 'username',
                 'choices' => $this->entityManager->createQuery('SELECT u from App\Entity\Inventor u WHERE u.username = :username')

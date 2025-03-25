@@ -56,12 +56,12 @@ class Inventor implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, Patent>
      */
-    #[ORM\ManyToMany(targetEntity: Patent::class, inversedBy: 'inventors')]
-    private Collection $AssociatedPatents;
+    #[ORM\ManyToMany(targetEntity: Patent::class, mappedBy: 'Inventors')]
+    private Collection $patents;
 
     public function __construct()
     {
-        $this->AssociatedPatents = new ArrayCollection();
+        $this->patents = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -202,24 +202,28 @@ class Inventor implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return Collection<int, Patent>
      */
-    public function getAssociatedPatents(): Collection
+    public function getPatents(): Collection
     {
-        return $this->AssociatedPatents;
+        return $this->patents;
     }
 
-    public function addAssociatedPatent(Patent $associatedPatent): static
+    public function addPatent(Patent $patent): static
     {
-        if (!$this->AssociatedPatents->contains($associatedPatent)) {
-            $this->AssociatedPatents->add($associatedPatent);
+        if (!$this->patents->contains($patent)) {
+            $this->patents->add($patent);
+            $patent->addInventor($this);
         }
 
         return $this;
     }
 
-    public function removeAssociatedPatent(Patent $associatedPatent): static
+    public function removePatent(Patent $patent): static
     {
-        $this->AssociatedPatents->removeElement($associatedPatent);
+        if ($this->patents->removeElement($patent)) {
+            $patent->removeInventor($this);
+        }
 
         return $this;
     }
+
 }

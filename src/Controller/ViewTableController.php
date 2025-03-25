@@ -16,12 +16,11 @@ final class ViewTableController extends AbstractController
 
         $user = $this->getUser(); // This line is used to get the current user
 
-        $patents = $repository->createQueryBuilder('p') // This line is used to create a query builder
-            ->where('p.inventors = :user') // This line is used to filter the query
-            ->setParameter('user', $user) // This line is used to set the parameter
-            ->getQuery(); // This line is used to get the query
+        // This resulted in showing us that the relationship is not found in the ORM, but is in the database itself
+        // dd($user->getPatents()); // This line is used to dump the patents of the current user
 
-        // $patents = $repository->findAll();
+        // This worked???
+        $patents = $user->getPatents();
 
         return $this->render('view_table/index.html.twig', [
             'patents' => $patents,

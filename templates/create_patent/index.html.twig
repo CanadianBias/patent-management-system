@@ -2,6 +2,10 @@
 
 {% block title %}Hello CreatePatentController!{% endblock %}
 
+{% block headerbuttons %}
+<a href="{{path('app_user_home')}}">Home</a>
+{% endblock %}
+
 {% block body %}
 
 {{ form_start(form) }}
