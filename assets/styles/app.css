@@ -36,3 +36,6 @@ footer {
     color: white;
     text-align: center;
 }
+.patent-row:hover {
+    background-color:#737373;
+}

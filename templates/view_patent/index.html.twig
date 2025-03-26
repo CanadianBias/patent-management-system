@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ patent.irn }}{% endblock %}
+
+{% block headerbuttons %}
+<a href="{{ path('app_view_table')}}">Back</a>
+{% endblock %}
+
+{% block body %}
+
+<table>
+    <thead>
+        <tr>
+            <th>IRN</th>
+            <th>Patent Number</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Language</th>
+            <th>Localization</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ patent.irn }}</td>
+            <td>{{ patent.patentNumber }}</td>
+            <td>{{ patent.title }}</td>
+            <td>{{ patent.descript }}</td>
+            <td>{{ patent.patentsAreCategorized.Type }}</td>
+            <td>{{ patent.patentsHaveLanguage.Code ~ " " ~ patent.patentsHaveLanguage.Name }}</td>
+            <td>{{ patent.patentsHaveLocalization.Type }}</td>
+            <td>{{ patent.patentsHaveStatus.Stat }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<table>
+    <thead>
+        <tr>
+            <th>Date Type</th>
+            <th>Short Date</th>
+            <th>Long Date</th>
+            <th>Grace Period</th>
+        </tr>
+    </thead>
+    <tbody>
+        
+    </tbody>
+</table>
+
+{% endblock %}
