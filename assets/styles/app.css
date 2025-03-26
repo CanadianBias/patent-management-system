@@ -28,6 +28,23 @@ a {
 a:hover {
     background-color: #737373;
 }
+.content {
+    padding: 20px;
+}
+.content > * {
+    padding: 20px;
+}
+table {
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+thead {
+    border-bottom: 1px solid black;
+}
+td {
+    margin: 0;
+    padding: 5px;
+}
 footer {
     background-color: black;
     position: fixed;
@@ -37,5 +54,5 @@ footer {
     text-align: center;
 }
 .patent-row:hover {
-    background-color:#737373;
+    background:#737373;
 }

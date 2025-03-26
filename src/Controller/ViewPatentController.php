@@ -19,8 +19,12 @@ final class ViewPatentController extends AbstractController
         if (!$patent) {
             throw $this->createNotFoundException();
         } else {
+
+            $dates = $patent->getPatentsHaveDates();
+
             return $this->render('view_patent/index.html.twig', [
                 'patent' => $patent,
+                'dates' => $dates,
             ]); 
         }
     }

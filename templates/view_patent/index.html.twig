@@ -45,7 +45,14 @@
         </tr>
     </thead>
     <tbody>
-        
+        {% for date in dates %}
+            <tr>
+                <td>{{ date.getDatesHaveTypes.DateType }}</td>
+                <td>{{ date.DateShort|date('Y-m-d H:i:s') }}</td>
+                <td>{{ date.DateLong|date('Y-m-d H:i:s') }}</td>
+                <td>{{ date.GracePeriod|date('Y-m-d H:i:s') }}</td>
+            </tr>
+        {% endfor %}
     </tbody>
 </table>
 
