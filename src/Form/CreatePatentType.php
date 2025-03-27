@@ -32,24 +32,42 @@ class CreatePatentType extends AbstractType
     {
 
         $builder
-            ->add('IRN', TextType::class)
-            ->add('PatentNumber', TextType::class)
-            ->add('Title', TextType::class)
-            ->add('Descript', TextType::class)
+            ->add('IRN', TextType::class, [
+                'label' => 'IRN: ',
+            ])
+            ->add('PatentNumber', TextType::class, [
+                'label' => 'Patent Number: ',
+            ])
+            ->add('Title', TextType::class, [
+                'label' => 'Title: ',
+            ])
+            ->add('Descript', TextType::class, [
+                'label' => 'Description: ',
+            ])
+            ->add('PatentHasBusinessType', EntityType::class, [
+                'class' => BusinessType::class,
+                'label' => 'Business Type: ',
+                'required' => false,
+                'choice_label' => 'Title',
+            ])
             ->add('PatentsAreCategorized', EntityType::class, [
                 'class' => Category::class,
+                'label' => 'Category: ',
                 'choice_label' => 'Type',
             ])
             ->add('PatentsHaveLocalization', EntityType::class, [
                 'class' => Localization::class,
+                'label' => 'Localization: ',
                 'choice_label' => 'Type',
             ])
             ->add('PatentsHaveLanguage', EntityType::class, [
                 'class' => Language::class,
+                'label' => 'Language: ',
                 'choice_label' => 'Name',
             ])
             ->add('PatentsHaveStatus', EntityType::class, [
                 'class' => Stats::class,
+                'label' => 'Status: ',
                 'choice_label' => 'Stat',
             ])
             // this adds the relationship in the database, but doesn't actually add the relationship in the ORM

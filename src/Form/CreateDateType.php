@@ -25,21 +25,26 @@ class CreateDateType extends AbstractType
     {
         $builder
             ->add('DateShort', null, [
+                'label' => 'Short Date: ',
                 'widget' => 'single_text',
             ])
             ->add('DateLong', null, [
+                'label' => 'Long Date: ',
                 'widget' => 'single_text',
             ])
             ->add('GracePeriod', null, [
+                'label' => 'Grace Period: ',
                 'widget' => 'single_text',
             ])
             ->add('DatesHaveTypes', EntityType::class, [
                 'class' => DateTypes::class,
+                'label' => 'Date Type: ',
                 'choice_label' => 'DateType',
             ])
             ->add('PatentID', EntityType::class, [
                 'class' => Patent::class,
                 'choice_label' => 'irn',
+                'label' => 'Patent: ',
                 'choices' => $this->entityManager->createQuery('SELECT p FROM App\Entity\Patent p WHERE :user MEMBER OF p.Inventors')
                     ->setParameter('user', $this->security->getUser())
                     ->getResult(),

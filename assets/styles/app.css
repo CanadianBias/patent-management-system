@@ -40,6 +40,7 @@ a:hover {
 }
 .content > * {
     padding: 20px;
+    margin-bottom: 10px;
 }
 table {
     border-collapse: collapse;
@@ -52,6 +53,52 @@ thead {
 td {
     margin: 0;
     padding: 5px;
+}
+form {
+    border: 1px solid black;
+    background-color: #222222;
+}
+input {
+    appearance: none;
+}
+label, input, select, button {
+    width: 95%;
+    margin: 10px;
+}
+select {
+    overflow: scroll;
+}
+#create_patent {
+    display: flex;
+    flex-flow: row wrap;
+}
+#create_patent > * {
+    flex: 1 1 25%;
+    margin: 5px;
+}
+#create_date {
+    display: flex;
+    flex-flow: row wrap;
+}
+#create_date > * {
+    flex: 1 1 25%;
+    margin: 5px;
+}
+#registration_form {
+    display: flex;
+    flex-flow: column wrap;
+}
+#registration_form > * {
+    flex: 1 1 25%;
+    margin: 5px;
+}
+#security {
+    display: flex;
+    flex-flow: column wrap;
+}
+#security > * {
+    flex: 1 1 25%;
+    margin: 5px;
 }
 footer {
     background-color: black;
