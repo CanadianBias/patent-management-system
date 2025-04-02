@@ -3,38 +3,69 @@
 {% block title %}View Patents{% endblock %}
 
 {% block headerbuttons %}
-
 <a href="{{ path('app_user_home') }}" class="btn btn-primary">Home</a>
-
 {% endblock %}
 
 {% block body %}
-
 <table data-controller="table">
     <thead>
         <tr>
-            <th>IRN</th>
-            <th>Patent Number</th>
-            <th>Title</th>
-            <th>Category</th>
-            <th>Language</th>
-            <th>Localization</th>
-            <th>Status</th>
+            <th class="table-header" data-field="IRN" data-order="{{ field == 'IRN' ? order : 'ASC' }}">
+                IRN
+                {% if field == 'IRN' %}
+                    {{ order == 'ASC' ? '↑' : '↓' }}
+                {% endif %}
+            </th>
+            <th class="table-header" data-field="PatentNumber" data-order="{{ field == 'PatentNumber' ? order : 'ASC' }}">
+                Patent Number
+                {% if field == 'PatentNumber' %}
+                    {{ order == 'ASC' ? '↑' : '↓' }}
+                {% endif %}
+            </th>
+            <th class="table-header" data-field="Title" data-order="{{ field == 'Title' ? order : 'ASC' }}">
+                Title
+                {% if field == 'Title' %}
+                    {{ order == 'ASC' ? '↑' : '↓' }}
+                {% endif %}
+            </th>
+            <th class="table-header" data-field="PatentsAreCategorized" data-order="{{ field == 'PatentsAreCategorized' ? order : 'ASC' }}">
+                Category
+                {% if field == 'PatentsAreCategorized' %}
+                    {{ order == 'ASC' ? '↑' : '↓' }}
+                {% endif %}
+            </th>
+            <th class="table-header" data-field="PatentsHaveLanguage" data-order="{{ field == 'PatentsHaveLanguage' ? order : 'ASC' }}">
+                Language
+                {% if field == 'PatentsHaveLanguage' %}
+                    {{ order == 'ASC' ? '↑' : '↓' }}
+                {% endif %}
+            </th>
+            <th class="table-header" data-field="PatentsHaveLocalization" data-order="{{ field == 'PatentsHaveLocalization' ? order : 'ASC' }}">
+                Localization
+                {% if field == 'PatentsHaveLocalization' %}
+                    {{ order == 'ASC' ? '↑' : '↓' }}
+                {% endif %}
+            </th>
+            <th class="table-header" data-field="PatentsHaveStatus" data-order="{{ field == 'PatentsHaveStatus' ? order : 'ASC' }}">
+                Status
+                {% if field == 'PatentsHaveStatus' %}
+                    {{ order == 'ASC' ? '↑' : '↓' }}
+                {% endif %}
+            </th>
         </tr>
     </thead>
     <tbody>
         {% for patent in patents %}
-                <tr class="patent-row" data-patent-id="{{ patent.id }}">
-                    <td>{{ patent.irn }}</td>
-                    <td>{{ patent.patentNumber }}</td>
-                    <td>{{ patent.title }}</td>
-                    <td>{{ patent.patentsAreCategorized.Type }}</td>
-                    <td>{{ patent.patentsHaveLanguage.Code ~ " " ~ patent.patentsHaveLanguage.Name }}</td>
-                    <td>{{ patent.patentsHaveLocalization.Type }}</td>
-                    <td>{{ patent.patentsHaveStatus.Stat }}</td>
-                </tr>
+            <tr class="patent-row" data-patent-id="{{ patent.id }}">
+                <td>{{ patent.irn }}</td>
+                <td>{{ patent.patentNumber }}</td>
+                <td>{{ patent.title }}</td>
+                <td>{{ patent.patentsAreCategorized.Type }}</td>
+                <td>{{ patent.patentsHaveLanguage.Code ~ " " ~ patent.patentsHaveLanguage.Name }}</td>
+                <td>{{ patent.patentsHaveLocalization.Type }}</td>
+                <td>{{ patent.patentsHaveStatus.Stat }}</td>
+            </tr>
         {% endfor %}
     </tbody>
 </table>
-
 {% endblock %}

@@ -11,5 +11,14 @@ export default class extends Controller {
                 window.location.href = `/view/patent/${patentId}`;
             });
         });
+        const tableHeaders = document.querySelectorAll('.table-header');
+        tableHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const column = header.getAttribute('data-field');
+                const order = header.getAttribute('data-order') || 'ASC';
+                const newOrder = order === 'ASC' ? 'DESC' : 'ASC';
+                window.location.href = `/view/table?sort=${column}&order=${newOrder}`;
+            });
+        });
     }
 }
