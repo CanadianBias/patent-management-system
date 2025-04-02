@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Dates;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -30,6 +31,88 @@ class DatesRepository extends ServiceEntityRepository
     //            ->getResult()
     //        ;
     //    }
+
+    private function setUpQueryBuilder(QueryBuilder $qb, $id): QueryBuilder
+    {
+        return $qb
+            ->join('d.PatentID', 'p')
+            ->join('d.DatesHaveTypes', 'dt')
+            ->andWhere('p.id = :id')
+            ->setParameter('id', $id)
+        ;
+    }
+
+    public function returnDatesByType($order, $id): array
+    {
+        $qb = $this->createQueryBuilder('d');
+        if ($order === 'ASC') {
+            return $this->setUpQueryBuilder($qb, $id)
+                ->orderBy('dt.DateType', 'ASC')
+                ->getQuery()
+                ->getResult()
+            ;
+        } else {
+            return $this->setUpQueryBuilder($qb, $id)
+                ->orderBy('dt.DateType', 'DESC')
+                ->getQuery()
+                ->getResult()
+            ;
+        }
+    }
+
+    public function returnDatesByDateShort($order, $id): array
+    {
+        $qb = $this->createQueryBuilder('d');
+        if ($order === 'ASC') {
+            return $this->setUpQueryBuilder($qb, $id)
+                ->orderBy('d.DateShort', 'ASC')
+                ->getQuery()
+                ->getResult()
+            ;
+        } else {
+            return $this->setUpQueryBuilder($qb, $id)
+                ->orderBy('d.DateShort', 'DESC')
+                ->getQuery()
+                ->getResult()
+            ;
+        }
+    }
+
+    public function returnDatesByDateLong($order, $id): array
+    {
+        $qb = $this->createQueryBuilder('d');
+        if ($order === 'ASC') {
+            return $this->setUpQueryBuilder($qb, $id)
+                ->orderBy('d.DateLong', 'ASC')
+                ->getQuery()
+                ->getResult()
+            ;
+        } else {
+            return $this->setUpQueryBuilder($qb, $id)
+                ->orderBy('d.DateLong', 'DESC')
+                ->getQuery()
+                ->getResult()
+            ;
+        }
+    }
+
+    public function returnDatesByGracePeriod($order, $id): array
+    {
+        $qb = $this->createQueryBuilder('d');
+        if ($order === 'ASC') {
+            return $this->setUpQueryBuilder($qb, $id)
+                ->orderBy('d.GracePeriod', 'ASC')
+                ->getQuery()
+                ->getResult()
+            ;
+        } else {
+            return $this->setUpQueryBuilder($qb, $id)
+                ->orderBy('d.GracePeriod', 'DESC')
+                ->getQuery()
+                ->getResult()
+            ;
+        }
+    }
 
     //    public function findOneBySomeField($value): ?Dates
     //    {

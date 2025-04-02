@@ -7,7 +7,9 @@
 {% endblock %}
 
 {% block body %}
+<div hidden data-controller="patent">
 
+</div>
 <table>
     <thead>
         <tr>
@@ -38,10 +40,30 @@
 <table>
     <thead>
         <tr>
-            <th>Date Type</th>
-            <th>Short Date</th>
-            <th>Long Date</th>
-            <th>Grace Period</th>
+            <th class="table-header" data-field="DatesHaveTypes" data-order="{{ field == 'DatesHaveTypes' ? order : 'ASC' }}">
+                Date Type
+                {% if field == 'DatesHaveTypes' %}
+                    {{ order == 'ASC' ? '↑' : '↓' }}
+                {% endif %}
+            </th>
+            <th class="table-header" data-field="DateShort" data-order="{{ field == 'DateShort' ? order : 'ASC' }}">
+                Short Date
+                {% if field == 'DateShort' %}
+                    {{ order == 'ASC' ? '↑' : '↓' }}
+                {% endif %}
+            </th>
+            <th class="table-header" data-field="DateLong" data-order="{{ field == 'DateLong' ? order : 'ASC' }}">
+                Long Date
+                {% if field == 'DateLong' %}
+                    {{ order == 'ASC' ? '↑' : '↓' }}
+                {% endif %}
+            </th>
+            <th class="table-header" data-field="GracePeriod" data-order="{{ field == 'GracePeriod' ? order : 'ASC' }}">
+                Grace Period
+                {% if field == 'GracePeriod' %}
+                    {{ order == 'ASC' ? '↑' : '↓' }}
+                {% endif %}
+            </th>
         </tr>
     </thead>
     <tbody>
