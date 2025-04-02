@@ -52,6 +52,7 @@ thead {
 }
 th {
     padding: 5px;
+    max-block-size: 10%;
 }
 td {
     margin: 0;
