@@ -24,7 +24,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
+        <tr class="single-patent">
             <td>{{ patent.irn }}</td>
             <td>{{ patent.patentNumber }}</td>
             <td>{{ patent.title }}</td>
@@ -68,7 +68,7 @@
     </thead>
     <tbody>
         {% for date in dates %}
-            <tr>
+            <tr class="date-row" data-id="{{ date.id }}">
                 <td>{{ date.getDatesHaveTypes.DateType }}</td>
                 <td>{{ date.DateShort|date('Y-m-d H:i:s') }}</td>
                 <td>{{ date.DateLong|date('Y-m-d H:i:s') }}</td>

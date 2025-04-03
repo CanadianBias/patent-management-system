@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Patent{% endblock %}
+
+{% block headerbuttons %}
+<a href="{{path('app_view_patent', {id: id})}}">Back</a>
+{% endblock %}
+
+{% block body %}
+
+{{ form_start(form) }}
+{{ form_widget(form) }}
+{{ form_end(form) }}
+
+{% endblock %}

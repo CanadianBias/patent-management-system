@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Patent;
+use App\Form\CreatePatentType;
 use App\Repository\DatesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -58,5 +59,22 @@ final class ViewPatentController extends AbstractController
                 'order' => $order,
             ]); 
         }
+    }
+
+    #[Route('/view/patent/{id}/edit', name: 'app_view_patent_edit')]
+    public function edit($id, Patent $patent, Request $request, EntityManagerInterface $em): Response
+    {
+        $form = $this->createForm(CreatePatentType::class, $patent);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->flush();
+            return $this->redirectToRoute('app_view_patent', array('id' => $id));
+        }
+
+        return $this->render('view_patent/edit.html.twig', [
+            'form' => $form->createView(),
+            'id' => $id,
+        ]);
     }
 }
