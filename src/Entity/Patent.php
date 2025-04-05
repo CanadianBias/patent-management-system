@@ -82,6 +82,12 @@ class Patent
     #[ORM\ManyToMany(targetEntity: Inventor::class, inversedBy: 'patents')]
     private Collection $Inventors;
 
+    /**
+     * @var Collection<int, File>
+     */
+    #[ORM\OneToMany(targetEntity: File::class, mappedBy: 'patent', orphanRemoval: true)]
+    private Collection $Files;
+
     public function __construct()
     {
         $this->ThisPatentReferences = new ArrayCollection();
@@ -90,6 +96,7 @@ class Patent
         $this->PatentsHaveClaims = new ArrayCollection();
         $this->PatentsHaveDates = new ArrayCollection();
         $this->Inventors = new ArrayCollection();
+        $this->Files = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -375,6 +382,36 @@ class Patent
     public function removeInventor(Inventor $inventor): static
     {
         $this->Inventors->removeElement($inventor);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, File>
+     */
+    public function getFiles(): Collection
+    {
+        return $this->Files;
+    }
+
+    public function addFile(File $file): static
+    {
+        if (!$this->Files->contains($file)) {
+            $this->Files->add($file);
+            $file->setPatent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFile(File $file): static
+    {
+        if ($this->Files->removeElement($file)) {
+            // set the owning side to null (unless already changed)
+            if ($file->getPatent() === $this) {
+                $file->setPatent(null);
+            }
+        }
 
         return $this;
     }

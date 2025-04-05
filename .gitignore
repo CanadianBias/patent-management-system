@@ -26,6 +26,4 @@
 ###< symfony/asset-mapper ###
 
 #custom ignore
-.env
-.env.dev
-.env.test
+/public/uploads/

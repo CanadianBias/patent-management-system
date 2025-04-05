@@ -14,9 +14,12 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Validator\Constraints\All;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -79,10 +82,40 @@ class CreatePatentType extends AbstractType
                     ->getResult(),
                 'multiple' => true,
             ])
-            // ->add('PatentHasBusinessType', EntityType::class, [
-            //     'class' => BusinessType::class,
-            //     'choice_label' => 'id',
-            // ])
+            ->add('Files', FileType::class, [
+                'attr' => [
+                    'multiple' => 'true',
+                    'accept' => '.pdf, .png, .jpg, .jpeg, .txt',
+                ],
+                'constraints' => [
+                    new All([
+                        'constraints' => [
+                            new File([
+                                'maxSize' => '1024k',
+                                'mimeTypes' => [
+                                    'application/pdf',
+                                    'application/x-pdf',
+                                    'application/png',
+                                    'application/x-png',
+                                    'application/jpg',
+                                    'application/x-jpg',
+                                    'application/jpeg',
+                                    'application/x-jpeg',
+                                    'application/txt',
+                                    'application/x-txt',
+                                    'application/pdf; charset=binary',
+                                    'application/x-pdf; charset=binary',
+                                ],
+                                'mimeTypesMessage' => 'Please upload a valid PDF document',
+                            ]),
+                        ]
+                    ])
+                ],
+                'label' => 'Files: ',
+                'mapped' => false,
+                'multiple' => true,
+                'required' => false,
+            ])
             ->add('submit', SubmitType::class)
         ;
     }
