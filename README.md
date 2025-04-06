@@ -12,9 +12,8 @@ text and/or email.
 
 ## Project Structure
 
-- PHP database entities, page controllers, and form builders found in /src
+- PHP database entities, page controllers, form builders, and sitemap found in /src
 - HTML/Twig templates for general and specific page information found in /templates
 - JavaScript event listeners found in /assets/controllers
 - Stylesheets found in /assets/styles
 - Some default values for tables inserted into database in /migrations
-- Sitemap available in project root
