@@ -36,6 +36,11 @@ class PatentRepository extends ServiceEntityRepository
     //    }
 
 
+    // The functions below allow for returning speficially sorted arrays based off of different criteria
+    // These couldn't have been one function because the orderBy clause doesn't accept a variable
+
+    // General template function for below functions
+    // Saves some code duplication
     private function setUpQueryBuilder(QueryBuilder $qb, $id): QueryBuilder
     {
         return $qb
@@ -44,6 +49,8 @@ class PatentRepository extends ServiceEntityRepository
             ->setParameter('id', $id)
         ;
     }
+
+    // All below functions are fairly similar except for the orderBy clause
 
     public function returnPatentsByTitle($order, $id): array
     {

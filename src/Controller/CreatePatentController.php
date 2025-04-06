@@ -21,24 +21,36 @@ final class CreatePatentController extends AbstractController
     #[Route('/create/patent', name: 'app_create_patent')]
     public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger, #[Autowire('%kernel.project_dir%/public/uploads')] string $directory): Response
     {
+        // Create new Patent instance
         $patent = new Patent();
+        // Pass Patent to form
         $form = $this->createForm(CreatePatentType::class, $patent);
+        // Handle request to grab form data
         $form->handleRequest($request);
 
+        // Check if form is submitted and valid
         if ($form->isSubmitted() && $form->isValid()) {
+            // Get the data from the form
             $patent = $form->getData();
             // below actually adds the inventor to the patent object
             $patent->addInventor($this->getUser());
 
             // Handle file upload
             $files = $form->get('Files')->getData();
+            // Check if any files were uploaded
             if ($files) {
+                // Loop through each file
                 foreach ($files as $file) {
+                    // Create a new File instance
                     $fileEntity = new File();
+                    // Save original file name as PHP gives it a unique name
                     $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                    // Create a safe filename using the slugger
                     $safeFilename = $slugger->slug($originalFilename);
+                    // Create a unique filename by appending a unique ID
                     $newFilename = $safeFilename . '-' . uniqid() . '.' . $file->guessExtension();
     
+                    // Move the file to the directory where files are stored
                     try {
                         $file->move($directory, $newFilename);
                     } catch (FileException $e) {
@@ -55,9 +67,12 @@ final class CreatePatentController extends AbstractController
 
             }
 
+            // Persist the patent entity to the database
             $entityManager->persist($patent);
+            // Flush the changes to the database
             $entityManager->flush();
 
+            // Redirect user to view table page
             return $this->redirectToRoute('app_view_table');
         }
 

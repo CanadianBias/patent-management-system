@@ -20,16 +20,22 @@ final class ViewTableController extends AbstractController
         // This resulted in showing us that the relationship is not found in the ORM, but is in the database itself
         // dd($user->getPatents()); // This line is used to dump the patents of the current user
 
+        // These are passed from JavaScript controller
+        // Used to sort table of patents based off field and order
         $field = $request->query->get('sort');
         $order = $request->query->get('order');
         
+        // If the field and order are null, return all patents
         if (is_null($field) || is_null($order))
         {
-            $patents = $user->getPatents();
+            $patents = $user->getPatents(); // return all patents
         } else 
         {
+            // Get id of current user to pass to the repository
             $id = $user->getId();
+            // Get patents of the current user, this will be overwritten if the field is valid
             $patents = $user->getPatents();
+            // Call different method of repository based off field, pass it id of user and order
             switch($field) {
                 case 'IRN':
                     $patents = $repository->returnPatentsByIRN($order, $id);

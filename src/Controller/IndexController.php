@@ -11,6 +11,7 @@ class IndexController extends AbstractController # IndexController inherits Abst
     #[Route('/', name: 'index')]
     public function index(): Response
     {
+        // See templates/index/index.html.twig
         $contents = $this->renderView('index/index.html.twig');
 
         return new Response($contents);

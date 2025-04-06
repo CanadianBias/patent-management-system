@@ -1,5 +1,11 @@
 <?php
 
+/*
+    This was a trial controller to view all the languages in the database
+    It is not used in the application but is left here for reference
+    for using repositories to get data from the database
+*/
+
 namespace App\Controller;
 
 use App\Repository\LanguageRepository;

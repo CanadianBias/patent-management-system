@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Inventor;
-use App\Form\RegistrationFormType;
+use App\Form\RegistrationFormType; // uses RegistrationFormType in /src/Form to build form structure
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,22 +17,28 @@ class RegistrationController extends AbstractController
     #[Route('/register', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
+        // Create new Inventor entity instance
         $user = new Inventor();
+        // Create new form instance passing the Inventor entity
         $form = $this->createForm(RegistrationFormType::class, $user);
+        // Handle request to grab form data
         $form->handleRequest($request);
 
+        // Check if form is submitted and valid
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var string $plainPassword */
+            // grab plain password from form
             $plainPassword = $form->get('plainPassword')->getData();
 
             // encode the plain password
             $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
 
+            // persist the user entity to the database
             $entityManager->persist($user);
+            // flush the changes to the database
             $entityManager->flush();
 
-            // do anything else you need here, like send an email
-
+            // redirect user to login page
             return $this->redirectToRoute('app_login');
         }
 
