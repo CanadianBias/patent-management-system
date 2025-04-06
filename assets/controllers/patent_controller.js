@@ -46,5 +46,55 @@ export default class extends Controller {
                 window.location.href = `/view/date/${dateId}/edit`;
             })
         });
+
+        // Event listener allows for deletion of patent dates
+        dateRows.forEach(row => {
+            row.addEventListener('contextmenu', (event) => {
+                // prevent default right click behaviour
+                event.preventDefault();
+                // determine which date was right clicked
+                const dateId = row.getAttribute('data-id');
+                // show an alert to confirm deletion
+                const confirmDelete = confirm('Are you sure you want to delete this date?');
+                // if confirmed, redirect to delete action
+                if (confirmDelete) {
+                    // Redirect to the delete action with the date ID
+                    window.location.href = `/delete/date/${dateId}`;
+                }
+            })
+        });
+
+        // Event listener that allow for files to be deleted from patent
+        const fileRows = document.querySelectorAll('.file-row');
+        fileRows.forEach(row => {
+            row.addEventListener('contextmenu', (event) => {
+                // prevent default right click behaviour
+                event.preventDefault();
+                // determine which file was right clicked
+                const fileId = row.getAttribute('data-id');
+                // show an alert to confirm deletion
+                const confirmDelete = confirm('Are you sure you want to delete this file?');
+                // if confirmed, redirect to delete action
+                if (confirmDelete) {
+                    // Redirect to the delete action with the file ID
+                    window.location.href = `/delete/file/${fileId}`;
+                }
+            })
+        });
+
+
+        // Event listener that allows for whole patent to be deleted
+        const deleteButton = document.getElementById('delete-patent');
+        deleteButton.addEventListener('click', () => {
+            // show an alert to confirm deletion
+            const confirmDelete = confirm('Are you sure you want to delete this patent?');
+            // grab the current patent id from the URL
+            const baseURL = window.location.pathname.split('/').pop();
+            // if confirmed, redirect to delete action
+            if (confirmDelete) {
+                // Redirect to the delete action with the patent ID
+                window.location.href = `/delete/patent/${baseURL}`;
+            }
+        });
     }
 }

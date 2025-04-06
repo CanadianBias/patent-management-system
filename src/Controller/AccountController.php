@@ -11,8 +11,9 @@ final class AccountController extends AbstractController
     #[Route('/account', name: 'app_account')]
     public function index(): Response
     {
+        $userId = $this->getUser()->getId();
         return $this->render('account/index.html.twig', [
-            'controller_name' => 'AccountController',
+            'userId' => $userId,
         ]);
     }
 }

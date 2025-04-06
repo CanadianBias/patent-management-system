@@ -1,20 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AccountController!{% endblock %}
+{% block title %}Manage Account{% endblock %}
+
+{% block headerbuttons %}<a href="{{ path('app_user_home')}}">Back</a>{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/home/senior-project/patent-management-system/src/Controller/AccountController.php</code></li>
-        <li>Your template at <code>/home/senior-project/patent-management-system/templates/account/index.html.twig</code></li>
-    </ul>
-</div>
+<div hidden data-controller="account"></div>
+<h1>Account Management</h1>
+<p>Manage your account settings and preferences.</p>
+<button id="delete-account" data-id="{{ userId }}">Delete Account</button>
 {% endblock %}

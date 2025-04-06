@@ -1,4 +1,6 @@
 /* General styles for all pages */
+
+/* Styles for HTML elements */
 html, body {
     font-family: Arial, Helvetica, sans-serif;
     color: white;
@@ -13,34 +15,12 @@ header {
     display: flex;
     flex-flow: row wrap;
 }
-.left-header {
-    flex: 1 0 70%;
-}
-.right-header {
-    flex: 1 0 30%;
-    text-align: right;
-}
-.right-header > * {
-    padding: 10px;
-    color: black;
-}
 a {
     color: white;
     text-decoration: none;
 }
 a:hover {
     background-color: #737373;
-}
-.content {
-    padding: 20px;
-    color: white;
-    background-image: linear-gradient(to right, #000000, #3533cd);
-    size: 100%;
-    height: 100%;
-}
-.content > * {
-    padding: 20px;
-    margin-bottom: 10px;
 }
 table {
     border-collapse: collapse;
@@ -72,6 +52,49 @@ label, input, select, button {
 select {
     overflow: scroll;
 }
+footer {
+    background-color: black;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+/* Styles for classes */
+.left-header {
+    flex: 1 0 70%;
+}
+.right-header {
+    flex: 1 0 30%;
+    text-align: right;
+}
+.right-header > * {
+    padding: 10px;
+    color: black;
+}
+.content {
+    padding: 20px;
+    color: white;
+    background-image: linear-gradient(to right, #000000, #3533cd);
+    size: 100%;
+    height: 100%;
+}
+.content > * {
+    padding: 10px;
+    margin-bottom: 10px;
+}
+.content p {
+    padding: 5px;
+    margin: 0px;
+}
+.patent-row:hover {
+    background:#737373;
+}
+.table-header:hover {
+    background:#737373;
+}
+/* Styles for specific elements */
 #create_patent {
     display: flex;
     flex-flow: row wrap;
@@ -104,18 +127,10 @@ select {
     flex: 1 1 25%;
     margin: 5px;
 }
-footer {
-    background-color: black;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    color: white;
-    text-align: center;
-    padding: 20px;
+#delete-patent, #delete-account {
+    display: inline;
+    background-color: red;
 }
-.patent-row:hover {
-    background:#737373;
-}
-.table-header:hover {
-    background:#737373;
+#delete-patent:hover, #delete-account:hover {
+    background-color: #ff0000;
 }

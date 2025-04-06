@@ -21,7 +21,9 @@ final class ViewPatentController extends AbstractController
         $patent = $this->getUser()->getPatents()->filter(function (Patent $patent) use ($id) {
             return $patent->getId() == $id;
         })->first();
-        
+
+        $files = $patent->getFiles();
+
         // These variables are used to sort the dates in the table
         // They are generated from event listeners in JavaScript controller
         // See /assets/controllers/patent_controller.js
@@ -71,6 +73,7 @@ final class ViewPatentController extends AbstractController
                 'dates' => $dates,
                 'field' => $field,
                 'order' => $order,
+                'files' => $files,
             ]); 
         }
     }

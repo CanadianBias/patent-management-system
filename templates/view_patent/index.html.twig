@@ -7,9 +7,10 @@
 {% endblock %}
 
 {% block body %}
-<div hidden data-controller="patent">
+<div hidden data-controller="patent"></div>
 
-</div>
+<p>Click a table row to edit, right-click to delete<p>
+
 <table>
     <thead>
         <tr>
@@ -77,5 +78,22 @@
         {% endfor %}
     </tbody>
 </table>
+
+<table>
+    <thead>
+        <tr>
+            <th>Filename</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for file in files %}
+            <tr class="file-row" data-id="{{ file.id }}">
+                <td>{{ file.Filename }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<button id="delete-patent">Delete Patent</button>
 
 {% endblock %}
