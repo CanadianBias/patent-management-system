@@ -7,7 +7,6 @@ use App\Entity\Patent;
 use App\Form\CreatePatentType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,7 +18,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 final class CreatePatentController extends AbstractController
 {
     #[Route('/create/patent', name: 'app_create_patent')]
-    public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger, #[Autowire('%kernel.project_dir%/public/uploads')] string $directory): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
         // Create new Patent instance
         $patent = new Patent();
@@ -37,6 +36,7 @@ final class CreatePatentController extends AbstractController
 
             // Handle file upload
             $files = $form->get('Files')->getData();
+            // dd($files);
             // Check if any files were uploaded
             if ($files) {
                 // Loop through each file
@@ -51,10 +51,12 @@ final class CreatePatentController extends AbstractController
                     $newFilename = $safeFilename . '-' . uniqid() . '.' . $file->guessExtension();
     
                     // Move the file to the directory where files are stored
-                    try {
+                    try { 
+                        $directory = $this->getParameter('kernel.project_dir') . '/public/uploads/';
                         $file->move($directory, $newFilename);
                     } catch (FileException $e) {
                         // Handle exception if something happens during file upload
+                        dd($e);
                     }
 
                     // Set the new filename in the File entity
@@ -77,7 +79,7 @@ final class CreatePatentController extends AbstractController
         }
 
         return $this->render('create_patent/index.html.twig', [
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 }

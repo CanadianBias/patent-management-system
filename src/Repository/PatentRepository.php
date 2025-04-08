@@ -35,6 +35,19 @@ class PatentRepository extends ServiceEntityRepository
     //        ;
     //    }
 
+    // Function to return all patents for specific inventor to export to CSV
+    public function returnAllPatentsByInventor($id): array
+    {
+        return $this->createQueryBuilder('p')
+            ->join('p.Inventors', 'i')
+            ->join('p.PatentsHaveDates', 'd')
+            ->andWhere('i.id = :id')
+            ->setParameter('id', $id)
+            ->orderBy('p.Title', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
     // The functions below allow for returning speficially sorted arrays based off of different criteria
     // These couldn't have been one function because the orderBy clause doesn't accept a variable

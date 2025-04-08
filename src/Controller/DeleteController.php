@@ -25,6 +25,22 @@ final class DeleteController extends AbstractController
         // The id is passed in the URL and is used to find the date in the database
         // The date is then removed from the database and the user is redirected to the patent view page
 
+        $isAccessible = false;
+        $patents = $this->getUser()->getPatents();
+        foreach ($patents as $patent) {
+            $dates = $patent->getPatentsHaveDates();
+            foreach ($dates as $date) {
+                if ($date->getId() == $id) {
+                    $isAccessible = true;
+                    break;
+                }
+            }
+        }
+
+        if (!$isAccessible) {
+            throw $this->createNotFoundException('You do not have access to this date');
+        }
+
         $date = $entityManager->getRepository(Dates::class)->find($id);
 
         if (!$date) {
@@ -46,12 +62,24 @@ final class DeleteController extends AbstractController
 
         $file = $entityManager->getRepository(File::class)->find($id);
 
+        // Check if the file exists
         if (!$file) {
             throw $this->createNotFoundException('No file found for id ' . $id);
         }
 
+        // Get the file name and path
+        $filename = $file->getFilename();
+        $directory = $this->getParameter('kernel.project_dir') . '/public/uploads/';
+        $filePath = $directory . $filename;
+
+        // Remove file entity from database
         $entityManager->remove($file);
         $entityManager->flush();
+
+        // Delete the file from the server
+        if (file_exists($filePath)) {
+            unlink($filePath);
+        }
 
         return $this->redirectToRoute('app_view_patent', ['id' => $file->getPatent()->getId()]);
     }
@@ -64,14 +92,29 @@ final class DeleteController extends AbstractController
         // The patent is then removed from the database and the user is redirected to the patent view page
 
         $patent = $entityManager->getRepository(Patent::class)->find($id);
+        $dates = $patent->getDates();
+        $files = $patent->getFiles();
 
+        // Check if the patent exists
         if (!$patent) {
             throw $this->createNotFoundException('No patent found for id ' . $id);
         }
 
+        // Remove all dates associated with the patent
+        foreach ($dates as $date) {
+            deleteDate($date->getId(), $entityManager);
+        }
+
+        // Remove all files associated with the patent
+        foreach ($files as $file) {
+            deleteFile($file->getId(), $entityManager);
+        }
+
+        // Remove the patent entity from the database
         $entityManager->remove($patent);
         $entityManager->flush();
 
+        // Redirect the user to the table view page
         return $this->redirectToRoute('app_view_table');
     }
 
