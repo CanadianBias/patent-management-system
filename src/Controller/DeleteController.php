@@ -38,7 +38,7 @@ final class DeleteController extends AbstractController
         }
 
         if (!$isAccessible) {
-            throw $this->createNotFoundException('You do not have access to this date');
+            throw $this->createNotFoundException('No date found for id ' . $id);
         }
 
         $date = $entityManager->getRepository(Dates::class)->find($id);
@@ -59,6 +59,22 @@ final class DeleteController extends AbstractController
         // This route is used to delete a file from the database
         // The id is passed in the URL and is used to find the file in the database
         // The file is then removed from the database and the user is redirected to the patent view page
+
+        $isAccessible = false;
+        $patents = $this->getUser()->getPatents();
+        foreach ($patents as $patent) {
+            $files = $patent->getFiles();
+            foreach ($files as $file) {
+                if ($file->getId() == $id) {
+                    $isAccessible = true;
+                    break;
+                }
+            }
+        }
+
+        if (!$isAccessible) {
+            throw $this->createNotFoundException('No file found for id ' . $id);
+        }
 
         $file = $entityManager->getRepository(File::class)->find($id);
 
@@ -92,7 +108,7 @@ final class DeleteController extends AbstractController
         // The patent is then removed from the database and the user is redirected to the patent view page
 
         $patent = $entityManager->getRepository(Patent::class)->find($id);
-        $dates = $patent->getDates();
+        $dates = $patent->getPatentsHaveDates();
         $files = $patent->getFiles();
 
         // Check if the patent exists
@@ -100,14 +116,27 @@ final class DeleteController extends AbstractController
             throw $this->createNotFoundException('No patent found for id ' . $id);
         }
 
+        $isAccessible = false;
+
+        foreach ($patent->getInventors() as $inventor) {
+            if ($inventor->getId() == $this->getUser()->getId()) {
+                $isAccessible = true;
+                break;
+            }
+        }
+
+        if (!$isAccessible) {
+            throw $this->createNotFoundException('No patent found for id ' . $id);
+        }
+
         // Remove all dates associated with the patent
         foreach ($dates as $date) {
-            deleteDate($date->getId(), $entityManager);
+            $this->deleteDate($date->getId(), $entityManager);
         }
 
         // Remove all files associated with the patent
         foreach ($files as $file) {
-            deleteFile($file->getId(), $entityManager);
+            $this->deleteFile($file->getId(), $entityManager);
         }
 
         // Remove the patent entity from the database
@@ -129,6 +158,11 @@ final class DeleteController extends AbstractController
 
         if (!$inventor) {
             throw $this->createNotFoundException('No inventor found for id ' . $id);
+        }
+
+        // Check if the inventor is the current user
+        if ($inventor->getId() !== $this->getUser()->getId()) {
+            throw $this->createAccessDeniedException('No inventor found for id ' . $id);
         }
 
         $entityManager->remove($inventor);

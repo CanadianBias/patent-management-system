@@ -3,10 +3,11 @@
 {% block title %}View Patents{% endblock %}
 
 {% block headerbuttons %}
-<a href="{{ path('app_user_home') }}" class="btn btn-primary">Home</a>
+<a href="{{ path('app_create_patent')}}">New Patent</a><a href="{{path('app_create_date')}}">New Date</a><a href="{{ path('app_user_home') }}" class="btn btn-primary">Home</a>
 {% endblock %}
 
 {% block body %}
+<p>Click on a row to see more information</p>
 <table data-controller="table">
     <thead>
         <tr>

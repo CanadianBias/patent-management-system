@@ -16,6 +16,19 @@ class FileRepository extends ServiceEntityRepository
         parent::__construct($registry, File::class);
     }
 
+    public function findOneById($id, $userId): ?File
+    {
+        return $this->createQueryBuilder('f')
+            ->join('f.patent', 'p')
+            ->join('p.Inventors', 'i')
+            ->andWhere('f.id = :id')
+            ->andWhere('i.id = :userId')
+            ->setParameter('userId', $userId)
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     //    /**
     //     * @return File[] Returns an array of File objects
     //     */

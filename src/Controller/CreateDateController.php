@@ -37,7 +37,7 @@ final class CreateDateController extends AbstractController
         }
 
         return $this->render('create_date/index.html.twig', [
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 }

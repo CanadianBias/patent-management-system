@@ -33,6 +33,15 @@ class InventorRepository extends ServiceEntityRepository implements PasswordUpgr
         $this->getEntityManager()->flush();
     }
 
+    public function findOneById($id): ?Inventor
+    {
+        return $this->createQueryBuilder('i')
+            ->andWhere('i.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult();
+    } 
+
     //    /**
     //     * @return Inventor[] Returns an array of Inventor objects
     //     */

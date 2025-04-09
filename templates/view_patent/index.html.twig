@@ -3,7 +3,7 @@
 {% block title %}{{ patent.irn }}{% endblock %}
 
 {% block headerbuttons %}
-<a href="{{ path('app_view_table')}}">Back</a>
+<a href="{{ path('app_create_patent')}}">New Patent</a><a href="{{path('app_create_date')}}">New Date</a><a href="{{ path('app_view_table')}}">Back</a>
 {% endblock %}
 
 {% block body %}
@@ -38,6 +38,7 @@
     </tbody>
 </table>
 
+{% if dates is not empty %}
 <table>
     <thead>
         <tr>
@@ -78,7 +79,10 @@
         {% endfor %}
     </tbody>
 </table>
+{% endif %}
 
+{% if files is not empty %}
+<p>Click to download corresponding file</p>
 <table>
     <thead>
         <tr>
@@ -93,6 +97,7 @@
         {% endfor %}
     </tbody>
 </table>
+{% endif %}
 
 <button id="delete-patent">Delete Patent</button>
 

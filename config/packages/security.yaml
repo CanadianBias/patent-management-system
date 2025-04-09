@@ -41,6 +41,8 @@ security:
         - { path: '^/view', roles: ROLE_USER }
         - { path: '^/create', roles: ROLE_USER }
         - { path: '^/account', roles: ROLE_USER }
+        - { path: '^/delete', roles: ROLE_USER }
+        - { path: '^/download', roles: ROLE_USER }
 
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }

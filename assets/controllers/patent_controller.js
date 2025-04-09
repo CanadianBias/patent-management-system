@@ -64,8 +64,18 @@ export default class extends Controller {
             })
         });
 
-        // Event listener that allow for files to be deleted from patent
+        // Event listener that downloads the files when clicked
         const fileRows = document.querySelectorAll('.file-row');
+        fileRows.forEach(row => {
+            row.addEventListener('click', () => {
+                // grab the file id from the data-id attribute
+                const fileId = row.getAttribute('data-id');
+                // Redirect to download the file
+                window.location.href = `/download/file/${fileId}`;
+            })
+        });
+
+        // Event listener that allow for files to be deleted from patent
         fileRows.forEach(row => {
             row.addEventListener('contextmenu', (event) => {
                 // prevent default right click behaviour
