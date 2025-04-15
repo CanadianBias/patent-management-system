@@ -16,6 +16,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+// This controller handles redirects from JavaScript controllers associated with different pages
+// Each function is passed an id in the URL, which is checked against the current user to determine permissions for deletion
+
+// Ideally, these pages would not be able to be typed into the browser and accessed, but this would require greater understanding of access control in Symfony
+
 final class DeleteController extends AbstractController
 {
     #[Route('/delete/date/{id}', name: 'app_delete_date')]
@@ -25,31 +30,44 @@ final class DeleteController extends AbstractController
         // The id is passed in the URL and is used to find the date in the database
         // The date is then removed from the database and the user is redirected to the patent view page
 
+        // temporary variable to check if patent is allowed to be edited by user
         $isAccessible = false;
+        // pull up patent list of currently logged in user
         $patents = $this->getUser()->getPatents();
+        // loop through all the patents
         foreach ($patents as $patent) {
+            // get date list of each patent
             $dates = $patent->getPatentsHaveDates();
+            // loop through each date
             foreach ($dates as $date) {
+                // if this date is the same as in the URL
                 if ($date->getId() == $id) {
+                    // change variable and break loop
                     $isAccessible = true;
                     break;
                 }
             }
         }
 
+        // Throw exception if the patent is not accesible to the current user
+        // We don't want to let them know that date id belongs to someone else, so we'll just give them a generic exception
         if (!$isAccessible) {
             throw $this->createNotFoundException('No date found for id ' . $id);
         }
 
+        // Look in the Dates repository to find object
         $date = $entityManager->getRepository(Dates::class)->find($id);
 
+        // If the above variable is false, throw the same exception as above
         if (!$date) {
             throw $this->createNotFoundException('No date found for id ' . $id);
         }
 
+        // The below two methods remove the date and save the changes
         $entityManager->remove($date);
         $entityManager->flush();
 
+        // Redirect the user back to the patent they were originally on
         return $this->redirectToRoute('app_view_patent', ['id' => $date->getPatentId()->getId()]);
     }
 
@@ -60,6 +78,9 @@ final class DeleteController extends AbstractController
         // The id is passed in the URL and is used to find the file in the database
         // The file is then removed from the database and the user is redirected to the patent view page
 
+        // This is similar logic to removing dates
+        // If the file is not related to the current user,
+        // don't allow for the file to be deleted
         $isAccessible = false;
         $patents = $this->getUser()->getPatents();
         foreach ($patents as $patent) {
@@ -97,6 +118,7 @@ final class DeleteController extends AbstractController
             unlink($filePath);
         }
 
+        // Redirect to the patent page that this file used to belong to
         return $this->redirectToRoute('app_view_patent', ['id' => $file->getPatent()->getId()]);
     }
 
@@ -107,6 +129,7 @@ final class DeleteController extends AbstractController
         // The id is passed in the URL and is used to find the patent in the database
         // The patent is then removed from the database and the user is redirected to the patent view page
 
+        // If deleting a specific patent, we need to make sure we're deleting all related files and dates
         $patent = $entityManager->getRepository(Patent::class)->find($id);
         $dates = $patent->getPatentsHaveDates();
         $files = $patent->getFiles();
@@ -118,6 +141,9 @@ final class DeleteController extends AbstractController
 
         $isAccessible = false;
 
+        // Check through all inventors associated with the patent, and check if the current user is one of them
+        // In the future, when patents truely can have multiple inventors, there should be some way of distinguishing who has permission
+        // to delete patents and who can simply view them, which requires a composite entity like there is for Patents and Classifications
         foreach ($patent->getInventors() as $inventor) {
             if ($inventor->getId() == $this->getUser()->getId()) {
                 $isAccessible = true;

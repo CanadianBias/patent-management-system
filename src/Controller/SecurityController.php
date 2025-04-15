@@ -7,6 +7,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
+// This controller handles users logging in
+// The form logic is actually contained within the Twig template, rather than a Symfony PHP form.
+
 class SecurityController extends AbstractController
 {
     #[Route(path: '/login', name: 'app_login')]

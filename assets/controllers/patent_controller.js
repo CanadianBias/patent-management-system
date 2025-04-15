@@ -1,5 +1,7 @@
 import { Controller } from '@hotwired/stimulus';
 
+// This controller handles the sorting, editing, deletion, and downloading of patents, dates, and files on the ViewPatentController page
+
 export default class extends Controller {
     connect() {
         console.log('This log comes from assets/controllers/patent_controller.js');

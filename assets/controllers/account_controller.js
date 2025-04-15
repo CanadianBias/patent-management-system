@@ -1,5 +1,7 @@
 import { Controller } from '@hotwired/stimulus';
-
+// This controller is associated with the AccountController page
+// It handles the delete-account button and the download-account buttons which
+// redirect to the DeleteController and DownloadController respectively. 
 export default class extends Controller {
     connect() {
         const deleteAccount = document.getElementById('delete-account');

@@ -12,6 +12,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
+// This Controller handles the creation of new users.
+// This Controller could also have a route to edit the current user's information through the same RegistrationFormType
+
 class RegistrationController extends AbstractController
 {
     #[Route('/register', name: 'app_register')]

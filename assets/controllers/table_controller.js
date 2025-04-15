@@ -1,5 +1,7 @@
 import { Controller } from '@hotwired/stimulus';
 
+// This controller handles sorting and redirecting to patent pages on the ViewTableController page
+
 export default class extends Controller {
     connect() {
         console.log('This log comes from assets/controllers/table_controller.js');
