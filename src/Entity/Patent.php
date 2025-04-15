@@ -27,61 +27,86 @@ class Patent
     #[ORM\OneToMany(targetEntity: RelatedPatents::class, mappedBy: 'RelatedPatent', orphanRemoval: true)]
     private Collection $PatentReferencedBy;
 
+    // This is set by the user for their own personal use to organize their patents
     #[ORM\Column(length: 255)]
     private ?string $IRN = null;
 
+    // This should be the patent number assigned by the patent office
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $PatentNumber = null;
 
+    // This is the official or unofficial title of the patent
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $Title = null;
 
+    // This is the description, or abstract of the patent
     #[ORM\Column(length: 1023, nullable: true)]
     private ?string $Descript = null;
 
+    // Each patent has one category, a category can have many patents
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $PatentsAreCategorized = null;
 
+    // Each patent has one localization, a localization can have many patents
+    // Note: in future business logic, it may make more sense for a patent submitted both
+    // in the United States and abroad to have multiple localizations
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?Localization $PatentsHaveLocalization = null;
 
+    // Each patent has one language, a language can have many patents
+    // Note: in future business logic, it may make more sense for a patent submitted in
+    // multiple languages to have multiple languages in the database
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?Language $PatentsHaveLanguage = null;
 
+    // Each patent has one status, a status can have many patents
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?Stats $PatentsHaveStatus = null;
 
+    // This is a many-to-many relationship with the classification table
+    // This is not currently implemented in the appplication
+    // I cannot find a reliable, massagable source of data for a list of classifications
     /**
      * @var Collection<int, PatentsToClassification>
      */
     #[ORM\OneToMany(targetEntity: PatentsToClassification::class, mappedBy: 'Patent', orphanRemoval: true)]
     private Collection $ClassificationsList;
 
+    // Claims are a weak entity dependent on the patent
+    // Patents can have many claims, a claim has only one patent
+    // Not currently implemented in application due to form complexity required
     /**
      * @var Collection<int, Claims>
      */
     #[ORM\OneToMany(targetEntity: Claims::class, mappedBy: 'PatentID', orphanRemoval: true)]
     private Collection $PatentsHaveClaims;
 
+    // Each patent has one business type, a business type can have many patents
     #[ORM\ManyToOne]
     private ?BusinessType $PatentHasBusinessType = null;
 
+    // Patents can have many dates, a date has only one patent
     /**
      * @var Collection<int, Dates>
      */
     #[ORM\OneToMany(targetEntity: Dates::class, mappedBy: 'PatentID', orphanRemoval: true)]
     private Collection $PatentsHaveDates;
 
+    // Patents can have many inventors, inventors can have many patents
+    // This is not implemented again due to form complexity and users having to 
+    // either claim or share patents with other inventors, which would require
+    // some level of user interaction
     /**
      * @var Collection<int, Inventor>
      */
     #[ORM\ManyToMany(targetEntity: Inventor::class, inversedBy: 'patents')]
     private Collection $Inventors;
 
+    // Patents can have many files, a file has one patent
     /**
      * @var Collection<int, File>
      */
@@ -104,6 +129,9 @@ class Patent
         return $this->id;
     }
 
+    // This is a self-pointing relationship between patents
+    // Patents can be related to other patents, usually one referencing another
+    // This is complex, and not implemented yet
     /**
      * @return Collection<int, RelatedPatents>
      */

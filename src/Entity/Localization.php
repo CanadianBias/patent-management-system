@@ -5,6 +5,11 @@ namespace App\Entity;
 use App\Repository\LocalizationRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+// Patents are published in a geographical region and have a corresponding patent office
+// As this project is being developed in the United States, International and USPC are the only options for now
+
+// This entity is autofilled in the migrations
+
 #[ORM\Entity(repositoryClass: LocalizationRepository::class)]
 class Localization
 {

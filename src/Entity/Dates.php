@@ -6,6 +6,9 @@ use App\Repository\DatesRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+// Patents have a collection of dates associated with them, setting different deadlines with the patent office to
+// ensure granting, renewal to the patent owner, and other important processes
+
 #[ORM\Entity(repositoryClass: DatesRepository::class)]
 class Dates
 {
@@ -14,6 +17,8 @@ class Dates
     #[ORM\Column]
     private ?int $id = null;
 
+    // Due to my lack of business knowledge, I am not sure what the difference between short and long dates is
+    // I think this has more to do with the type of date, but I included both here as date fields
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $DateShort = null;
 
@@ -23,10 +28,15 @@ class Dates
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $GracePeriod = null;
 
+    // Each date is defined by a type, which is defined in the DateTypes entity
+    // Each date has one type, a date type can have many dates
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?DateTypes $DatesHaveTypes = null;
 
+    // This is a reference to the patent that this date is associated with
+    // It is inversed by the PatentsHaveDates property in the Patent entity
+    // Dates have one patent, each patent can have many dates
     #[ORM\ManyToOne(inversedBy: 'PatentsHaveDates')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Patent $PatentID = null;
