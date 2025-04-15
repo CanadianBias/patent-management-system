@@ -1,7 +1,7 @@
 # Controllers
 
 ## Sitemap
-<img src="documentation/sitemap.png">
+<img src="/documentation/sitemap.png">
 
 > [!NOTE]
 > The below controllers lack logic, they're currently placeholders
