@@ -30,6 +30,11 @@ In addition to Markdown files, there are diagrams that can be found in [/documen
 [!WARNING]
 Markdown text coloring is not supported by GitHub's Markdown editor. If you are reading this in GitHub, only 7 is marked yellow. The rest are marked green.
 
+Test List
+- [ ] number one
+- [ ] number two
+- [x] number three
+
 The project shall:
 1. <font color="green">Use an Ubuntu Server Linux virtual machine to host all services required.</font>
 2. <font color="green">Use an Apache2 web server to host the web interface.</font>
