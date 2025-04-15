@@ -114,4 +114,4 @@ Locally, this application is hosted on a Ubuntu Server  24.04 virtual machine ru
 <table>
 
 ### Apache
-Symfony is able to host itself without another service through the framework. However, in my project definitions, before I decided to move forward with a framework, I defined usage of Apache as a requirement. This require changing the default DirectoryRoot of Apache to where my Symfony project was located, and enabling some settings and downlaoding some dependencies in Apache.
+Symfony is able to host itself without another service through the framework. However, in my project definitions, before I decided to move forward with a framework, I defined usage of Apache as a requirement. This require changing the default DirectoryRoot of Apache to where my Symfony project was located, and enabling some settings and downloading some dependencies in Apache.
