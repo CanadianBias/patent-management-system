@@ -76,7 +76,7 @@ final class DownloadController extends AbstractController
                             'title' => $patent->getTitle(),
                             'description' => $patent->getDescript(),
                             'number' => $patent->getPatentNumber(),
-                            'status' => $patent->getPatentsHaveStatus(),
+                            'status' => $patent->getPatentsHaveStatus()->getStat(),
                             'category' => $patent->getPatentsAreCategorized()->getType(),
                             'language' => $patent->getPatentsHaveLanguage()->getName(),
                             'localization' => $patent->getPatentsHaveLocalization()->getType(),

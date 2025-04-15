@@ -1,7 +1,7 @@
 # Patent Management System
 *src*
 
-- Controller contains all PHP page controllers and respective logic, sitemap
+- Controller contains all PHP page controllers and respective logic
 - DataFixtures is unused but could be populated with sample data, but would require more logic compared to forms
 - Entity contains Doctrine ORM database entities and database schema diagram
 - Factory is unused, but could populate database along with DataFixtures with fake data

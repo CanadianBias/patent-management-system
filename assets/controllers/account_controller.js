@@ -8,5 +8,9 @@ export default class extends Controller {
                 window.location.href = `/delete/inventor/${deleteAccount.getAttribute('data-id')}`;
             }
         });
-    }
+        const downloadAccount = document.getElementById('download-account');
+        downloadAccount.addEventListener('click', () => {
+            window.location.href = `/download/user/${downloadAccount.getAttribute('data-id')}`;
+        });
+    }   
 }
