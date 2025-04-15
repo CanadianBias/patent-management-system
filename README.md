@@ -27,6 +27,9 @@ In addition to Markdown files, there are diagrams that can be found in [/documen
 ## Project Requirements
 *Project requirements that are complete are marked as <font color="green">green</font>, requirements that are partially complete are marked as <font color="yellow">yellow</font>, requirements that are not complete are marked as <font color="red">red</font>.*
 
+[!WARNING]
+Markdown text coloring is not supported by GitHub's Markdown editor. If you are reading this in GitHub, only 7 is marked yellow. The rest are marked green.
+
 The project shall:
 1. <font color="green">Use an Ubuntu Server Linux virtual machine to host all services required.</font>
 2. <font color="green">Use an Apache2 web server to host the web interface.</font>
@@ -50,8 +53,8 @@ criteria</font>
     * See [patent form](/src/Form/CreatePatentType.php)
 13. <font color="green">Restrict users to be only able to read database entries associated with their account when they are logged in.</font>
     * Page controllers have logic to check any query they run against the current active user's ID
-14. Allow users to download a dump of information regarding all of their patents, or individual
-patents.
+14. <font color="green">Allow users to download a dump of information regarding all of their patents, or individual
+patents.</font>
     * See [download controller](/src/Controller/DownloadController.php)
 15. <font color="green">Allow users to change the information, status, or dates of existing patents in the system.</font>
     * Logic for this can be found in [ViewPatent controller](/src/Controller/ViewPatentController.php) and [ViewDate controller](/src/Controller/ViewDateController.php)
