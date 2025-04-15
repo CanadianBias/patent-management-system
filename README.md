@@ -27,13 +27,8 @@ In addition to Markdown files, there are diagrams that can be found in [/documen
 ## Project Requirements
 *Project requirements that are complete are marked as <font color="green">green</font>, requirements that are partially complete are marked as <font color="yellow">yellow</font>, requirements that are not complete are marked as <font color="red">red</font>.*
 
-[!WARNING]
-Markdown text coloring is not supported by GitHub's Markdown editor. If you are reading this in GitHub, only 7 is marked yellow. The rest are marked green.
-
-Test List
-- [ ] number one
-- [ ] number two
-- [x] number three
+> [!WARNING]
+> Markdown text coloring is not supported by GitHub's Markdown editor. If you are reading this in GitHub, only 7 is marked yellow. The rest are marked green.
 
 The project shall:
 1. <font color="green">Use an Ubuntu Server Linux virtual machine to host all services required.</font>
