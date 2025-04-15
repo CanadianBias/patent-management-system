@@ -63,6 +63,10 @@ patents.</font>
 
 ## Project Goals
 *Project goals that are complete are marked as <font color="green">green</font>, goals that are partially complete are marked as <font color="yellow">yellow</font>, goals that are not complete are marked as <font color="red">red</font>.*
+
+> [!WARNING]
+> 1-3 are marked yellow, 4-6 are marked red (as of 4/14)
+
 1. <font color="yellow">Automatically text/email inventors close to their upcoming dates.</font>
 2. <font color="yellow">Add mandatory two-factor authentication with an available API to protect intellectual property.</font>
 3. <font color="yellow">Create a secure backup location for the MariaDB database.</font>
