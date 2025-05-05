@@ -225,4 +225,14 @@ In addition to this, the 'bind-address' for MariaDB, the address range in which 
 bind-address = 0.0.0.0
 ```
 
-In my intial thinking, with my database-first approach, this is where I would explain my database schema creation. However, the database schema was created in PHP first, and migrated to the MariaDB server using [Doctrine ORM](https://www.doctrine-project.org/). 
+In my intial thinking, with my database-first approach, this is where I would explain my database schema creation. However, the database schema was created in PHP first, and migrated to the MariaDB server using [Doctrine ORM](https://www.doctrine-project.org/).
+
+### Configuring Project
+To run this application, the following applications need to be installed:
+- PHP
+- Composer
+- MariaDB
+
+Use either the zip file or clone the directory into your desired Symfony application folder, and then follow the guide provided [here](https://symfony.com/doc/current/setup.html#setting-up-an-existing-symfony-project).
+
+You'll need to configure either your .env or .env.local file to match your own database credentials, there should be example syntax in the main .env file. After this, you'll need to migrate the database to the newest version. This can be done by running `php bin/console doctrine:migrations:migrate` (See [here](https://symfony.com/doc/current/doctrine.html#installing-doctrine) for more information). Finally, run `symfony server:start` in the project root to start the Symfony server.
